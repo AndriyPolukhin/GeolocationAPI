@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My current Location Map</title>
+</head>
+<body>
+
+    <div id="result" style="width:600px;height:300px"></div>
+    
+    <script>
+        window.onload = function()
+        {
+            
+            if(navigator.geolocation)
+            {
+                navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            } 
+            else 
+            {
+                document.getElementById("result").innerHTML = "Your browser does not support HTML5 Geolocation";
+            }
+
+            function onSuccess(position)
+            {
+                var latitude = position.coords.latitude;
+                var longitude = position.coords.longitude;
+                var latlong = latitude + "," + longitude;
+
+                var mapUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" 
+                + latlong 
+                + "&amp;zoom=17&amp;size=600x300&amp;maptype=roadmap&key=MY_KEY_HERE";
+
+                document.getElementById("result").innerHTML = "<img src='" + mapUrl + "'>";
+                
+            }
+
+            function onError(error)
+            {
+               switch(error.code)
+               {
+                    case PERMISSION_DENIED:
+                        console.log("User denied permission");
+                        break;
+                    case TIMEOUT:
+                        console.log("Geolocation timeout");
+                        break;
+                    case POSITION_UNAVAILABLE:
+                        console.log("Geolocation information is not available");
+                        break;
+                    default:
+                        console.log("Error unknown");
+                        break;
+               }
+            }
+        }
+
+
+
+    </script>
+</body>
+</html>
