@@ -1,0 +1,61 @@
+"DO USE FLOW"
+
+
+Geolocation:
+You require the browser to support it, so you always check for the support
+
+USE three methods:
+getCurrentPosition
+watchPosition
+clearWatch
+
+METHOD 1: getCurrentPosition(success_callback, error_callback, positionOptions)
+
+
+
+Required : success_callback
+
+Get the Position object has two properties:
+
+timestamp:
+coords:
+    Latitude;
+    Longitude;
+    Accuracy;
+    Altitude;
+    Altitude accuracy;
+    Heading;
+    Speed;
+    Timestamp;
+
+
+Optional:
+
+Error and positionOptions
+
+clearWatch::
+
+METHOD 2: watchPosition(success_callback, error_callback, positionOptions)
+
+METHOD 3: clearWatch(id)
+
+THERE ARE 3 parameters in "positionOpitons" that we can use:
+
+Boolean: enableHighAccuracy -> True || False
+
+Number: timeout -> in milliseconds to wait for a position
+
+Number: maximumAge -> in milliseconds allowed to access the cached position
+
+
+
+METHOD 4: Handling Errors
+
+PositionError object -> code and message
+
+Error codes 4 types
+1. PERMISSION_DENIED
+2. POSITION_UNAVAILABLE
+3. TIMEOUT 
+4. UNKNOWN_ERROR
+

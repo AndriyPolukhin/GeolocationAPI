@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Get Current Position</title>
+</head>
+<body>
+    <div id="result"></div>
+<button id="btnPosition" onclick="getPosition();">Get Current Position</button>
+
+
+
+<script>
+ 
+/*
+    // Create a function to getPosition
+function getPosition() 
+{
+
+    // check if navigator is allowed
+    if(navigator.geolocation) {
+        // get posiitno if allowed
+        navigator.geolocation.getCurrentPosition(successPosition);
+    } else {
+        document.getElementById("result").innerHTML = "Your browser do not support geolocationAPI";
+    }
+
+    function successPosition(position)
+    {
+        // So I request the position
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+
+        document.getElementById("result").innerHTML = "Lattitude: " + lat + "<br>Longitude: " + long;
+        alert("Accuracy: " + position.coords.accuracy);
+        alert("Altitude: " + position.coords.altitude);
+        alert("Altitude Accuracy :" + position.coords.altitudeAccuracy);
+        alert("Direction :" + position.coords.heading);
+        alert("Speed :" + position.coords.speed);
+        alert("Timestamp : " + position.timestamp);
+    }
+
+}
+
+*/
+function getPosition()
+{
+    if(navigator.geolocation)
+    {
+        navigator.geolocation.getCurrentPosition(successPosition);
+    }
+    else
+    {
+        document.getElementById("result").innerHTML = "Your browser do not support Geolocation API";
+    }
+
+    function successPosition(position)
+    {
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        var acc = position.coords.accuracy;
+        var altitude = position.coords.altitude;
+        var altAcc = position.coords.altitudeAccuracy;
+        var direction = position.coords.heading;
+        var speed = position.coords.speed;
+        var time = position.timestamp;
+
+        document.getElementById("result").innerHTML = "Latitude: " + lat + 
+                                                      "<br>Longitude : "+long + 
+                                                      "<br>Accuracy: "+acc +
+                                                      "<br>Altitude : "+altitude +
+                                                      "<br>Altitude Accuracy : " + altAcc +
+                                                      "<br>Direction :" + direction +
+                                                      "<br>Speed : " + speed +
+                                                      "<br>TimeStamp : " + time;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

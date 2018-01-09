@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Get Current Position</title>
+</head>
+
+<body>
+    <div id="result"></div>
+    <button id="btnStartTracking" onclick="watchPosition();">Start Tracking Location</button>
+    <button id="btnStopTracking" onclick="stopWatching();">Stop Tracking Location</button>
+
+
+    <script>
+
+        var watchId = false;
+        function watchPosition() {
+            if (navigator.geolocation) {
+               watchId = navigator.geolocation.watchPosition(successPosition, failurePosition,
+               {
+                   enableHighAccuracy: false,
+                   timeout: 3000,
+                   maximumAge: 4000
+               });
+            }
+            else {
+                document.getElementById("result").innerHTML = "Your browser do not support Geolocation API";
+            }
+        }
+
+            function failurePosition(error)
+            {
+                console.log("Error Code : " + error.code + " Error Message: " + error.message);
+            }
+
+            function stopWatching() 
+            {
+               console.log(watchId);
+               watchId =  navigator.geolocation.clearWatch(watchId);
+               console.log("Button Pressed " + watchId);
+                
+            }
+
+            function successPosition(position) {
+                var lat = position.coords.latitude;
+                var long = position.coords.longitude;
+                var acc = position.coords.accuracy;
+                var altitude = position.coords.altitude;
+                var altAcc = position.coords.altitudeAccuracy;
+                var direction = position.coords.heading;
+                var speed = position.coords.speed;
+                var time = position.timestamp;
+
+                document.getElementById("result").innerHTML = "Latitude: " + lat +
+                    "<br>Longitude : " + long +
+                    "<br>Accuracy: " + acc +
+                    "<br>Altitude : " + altitude +
+                    "<br>Altitude Accuracy : " + altAcc +
+                    "<br>Direction :" + direction +
+                    "<br>Speed : " + speed +
+                    "<br>TimeStamp : " + time;
+            }
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

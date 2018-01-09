@@ -1,0 +1,37 @@
+var myWatch;
+
+window.onload = function() {
+
+    if (navigator.geolocation) {
+
+myWatch = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge: 1000,timeout: 2000, enableHighAccuracy: true });
+
+    } else 
+    {
+        document.getElementById("result").innerHTML = "Your browser does not support Geolocation API!!!";
+}
+
+
+window.onunload = function() {
+
+navigator.geolocation.clearWatch(myWatch);
+
+}
+
+function onSuccess(position)
+
+{
+
+speed = position.coords.speed;
+
+document.getElementById("result").innerHTML = "You are now moving at a speed of " + speed + " m/s";
+
+}
+
+function onError(error)
+
+{
+
+alert("Error Code: " + error.code + " Error Message: " + error.message);
+
+}
