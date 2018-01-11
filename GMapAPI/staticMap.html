@@ -5,12 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Static Map - White House</title>
+    <style>
+        #staticmap {
+            height: 100%;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
     
 
 
-    <div id="staticmap" style="width:300px;height:300px"></div>
+    <div id="staticmap"></div>
 
     <script>
         window.onload = function()
@@ -18,9 +29,8 @@
             var latitude = 38.897733;
             var longitude = -77.036531;
             var latlong = latitude + "," + longitude;
- var mapUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" + latlong + "&zoom=20&size=300x300&maptype=satellite&key=AIzaSyB0g5dwrSMoaREa0Ww3sH8UIOPO2kZLpqQ";
-            var mapUrl2 = "https://maps.googleapis.com/maps/api/staticmap?center=Brooklyn+Bridge,New+York,NY&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318 &markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=KEY_API";
-
+            var mapUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" + latlong + "&zoom=19&size=400x400&maptype=hybrid&key=YOUR_API_KEY";
+            
             document.getElementById("staticmap").innerHTML = "<img src='" + mapUrl + "'>";
         }
 

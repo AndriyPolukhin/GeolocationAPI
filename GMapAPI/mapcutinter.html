@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Current Map Interactive</title>
+
+    <style>
+        html, body {
+            height: 100%;
+            padding:0;
+            margin: 0;
+        }
+
+        #curIntMap {
+            height: 100%;
+            background-color: steelblue;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="curIntMap"></div>
+
+    <script>
+         
+
+        window.onload = function()
+        {
+           
+            // Initiate a selector variable
+           var mapDiv = document.getElementById("curIntMap");
+            
+           // use navigator
+            if(navigator.geolocation)
+            {
+                // set function request in a navigator
+                navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+                    timeout: 2000,
+                    maximumAge: 2000,
+                    enableHighAccuracy: true
+                });
+            }
+            else 
+            {
+                // message if no support
+                mapDiv.innerHTML = "Your browser does not support HTML5 Geolocation";
+            }
+
+            // create success function 
+            function onSuccess(position) {
+                // get coordinated
+                var lat = position.coords.latitude;
+                var lng = position.coords.longitude;
+
+                // set coordinated due to the google style of LatLng
+                var latlng = new google.maps.LatLng(lat, lng);
+                // set options for the map
+                var mapOptions = {
+                    center:latlng,
+                    zoom: 10,
+                    mapTypeId: google.maps.MapTypeId.HYBRID
+                };
+
+                // create a new map using the google format
+                var map = new google.maps.Map(mapDiv, mapOptions);
+                 
+            }
+
+            // create an Error function default style
+            function onError(error) {
+                switch (error.code) {
+                    case PERMISSION_DENIED:
+                        console.log("User denied permission");
+                        break;
+                    case TIMEOUT:
+                        console.log("Response timeout");
+                        break;
+                    case POSITION_UNAVAILABLE:
+                        console.log("Location information is unavailable");
+                        break;
+                    default:
+                        console.log("UNKNOWN_ERROR");
+                        break;
+                }
+            }
+        }
+            
+            
+
+           
+
+       
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+</body>
+</html>

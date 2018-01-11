@@ -1,5 +1,10 @@
 
 
+
+TUTORIAL FROM GOOGLE ON THE APP BUILDING:
+https://developers.google.com/maps/solutions/store-locator/simple-store-locator
+
+
 https://maps.googleapis.com/maps/api/staticmap?
 center=Brooklyn+Bridge,New+York,NY&
 zoom=13&
@@ -24,3 +29,62 @@ longitude --> -77.036531
         satellite;
         hybrid;
         terrain;
+
+
+
+EXERCISE 4:
+Display a static map of your current location at zoom level 17.
+
+
+// INNTERACTIVE MAP
+
+We use the KEY_API with a callback function and create a function separatly in js
+
+main interactive map options:
+
+var mapOptions = {
+        center: new google.map(lat, lgn),
+        zoom: 18,
+        mapTypeId: google.map.MapTypeId.ROADMAP
+};
+
+we use three new constructs in the onSuccess function
+
+google.maps.MapTypeId||.Map()||.LatLng
+
+                var latlng = new google.maps.LatLng(lat, lng);
+                
+                // set options for the map
+                var mapOptions = {
+                    center:latlng,
+                    zoom: 17,
+                    mapTypeId: google.maps.MapTypeId.HYBRID
+                };
+
+                // create a new map using the google format
+                var map = new google.maps.Map(mapDiv, mapOptions);
+
+
+EXERCISE 5: 
+Display an interactive map centered at your current location at zoom level 10. 
+Try changing the zoom level from the map to different values and see the difference. 
+
+
+
+// markers
+In order to create a marker
+1. We create a constructor for the markers
+2. We set the position of the markers
+
+I can add the following properties:
+position:
+map:
+title:
+animation: such as BOUNCE, DROP
+icon:
+
+next theres the infoWindow:
+
+create a variable info and set the content in it
+opent the info on a map
+info.open(map, marker);
