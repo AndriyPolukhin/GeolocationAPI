@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Where Am I?</title>
+
+		<style>
+			html, body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+
+			#location {
+				height: 40px;
+				color: navy;
+				font-weight: bold;
+				font-style: italic;
+				font-size: 1em;
+				font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+			}
+
+			#map {
+				height: 400px;
+ 				background-color: slateblue; 
+			    color: gold;
+			}
+
+		</style>
+	
+	</head>
+
+	
+	<body>
+		<div id="location"></div>
+		<did id="map"></did>
+
+
+		<script>
+		
+		 var watchId, geocoder, startLat, startLong;
+		 var start = 1;
+		window.onload = function()
+		{
+			if(navigator.geolocation)
+			{
+				watchId = navigator.geolocation.watchPosition(onSuccess, onError, {
+					enableHighAccuracy: true,
+					timeout:5*60*1000 ,
+					maximumAge: 60*1000
+				});
+			}
+			else
+			{
+				document.getElementById("location").innerHTML = "Your browser does not support HTML 5 Geolocation";
+			}	
+
+		}
+
+		function onSuccess(position)
+		{
+			var currentLat = position.coords.latitude;
+			var currentLong = position.coords.longitude;
+
+			// Here we declare the base parameters for map coordinates/ just ot center the map
+			if(start == 1)
+			{
+				startLat = currentLat;
+				startLong = currentLong;
+				start = 0;
+			}
+			// create a new geocoder
+			var geocoder = new google.maps.Geocoder(); 
+			var latlong = new google.maps.LatLng(currentLat, currentLong);
+
+			geocoder.geocode({'latLng':latlong},  function(results, status){
+				if(status == google.maps.GeocoderStatus.OK)
+				{
+					if(results)
+					{
+						console.log(results[0].formatted_address);
+ 						document.getElementById("location").innerHTML = "Your are now near: " + results[0].formatted_address;
+					}
+				}
+				else
+				{
+					console.log("Could not get the geolocation information");
+				}
+			});
+
+			// Map Optins creation
+			var mapOptions = {
+				center: new google.maps.LatLng(startLat, startLong),
+				zoom: 15,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+
+			var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+			var marker = new google.maps.Marker({
+				position: latlong,
+				map: map
+			});
+		}
+
+		function onError(error)
+		{
+			switch(error.code)
+			{
+				case PERMISSION_DENIED:
+					console.log("User denied permission");
+					break;
+				case TIMEOUT:
+					console.log("Geolocation timeout");
+					break;
+				case POSITION_UNAVAILABLE:
+					console.log("Geolocation is not unavailable");
+					break;
+				default:d
+					console.log("Unknown Error");
+					break;
+			}
+		}
+
+
+		
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+	
+	</body>
+</html>

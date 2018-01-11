@@ -1,0 +1,12 @@
+1. USE the basic navigator to get postiion
+2. Use geocode to displat it in a human readable formatt
+3. Use maps to dislay the data
+
+REVERSE GEOCODING:
+return a human readable address when passing lat and long
+
+
+https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
+
+
+ 
