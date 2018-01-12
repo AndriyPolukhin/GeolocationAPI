@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather Forecast</title>
+</head>
+<body>
+
+    <div id="weather"></div>
+    <script>
+        // If I want the information to be loaded on page load
+        window.onload = function()
+        {
+            if(navigator.geolocation)
+            {
+                navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+                    enableHighAccuracy: true,
+                    maximumAge: 60*1000,
+                    timeout: 5*60*1000
+                });
+            }
+            else
+            {
+                document.getElementById("weather").innerHTML = "Your browser does not supoort HTML5 Geolocation";
+            }
+        }
+
+        function onSuccess(position)
+        {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            var xmlhttpweather = new XMLHttpRequest();
+            var url = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=db8bccaa0d0b6f3205c80c763b51ed2a";
+            var appid = "db8bccaa0d0b6f3205c80c763b51ed2a";
+            var appidMy = "&appid=db8bccaa0d0b6f3205c80c763b51ed2a";
+            xmlhttpweather.open("GET", url, true);
+            xmlhttpweather.send();
+
+            
+        xmlhttpweather.onreadystatechange = function() 
+        {
+            var output = "";
+            if(xmlhttpweather.readyState == 4 && xmlhttpweather.status == 200)
+            {
+                var jsonResponse = xmlhttpweather.responseText;
+                var weatherInfo = JSON.parse(jsonResponse);
+
+                var location = weatherInfo.name;
+                var description = weatherInfo.weather[0].description;
+                var temperature = Math.round((weatherInfo.main.temp - 273.15)*100)/100;
+                var pressure = weatherInfo.main.pressure;
+                var humidity = weatherInfo.main.humidity;
+                var windspeed = weatherInfo.wind.speed;
+                var icon = weatherInfo.weather[0].icon;
+                 
+
+                output += "<p><b>Latest Weather Updates: " + location + "</b></p>";
+                output += "<table><tr><td>Description</td><td>" + description + "</td></tr>";
+                output += "<tr><td>Temperature</td><td>" + temperature + " o".sup() + "C</td></tr>";
+                output += "<tr><td>Pressure</td><td>" + pressure + " hpa</td></tr>";
+                output += "<tr><td>humidity</td><td>" + humidity + "</td></tr>";
+                output += "<tr><td>Windspeed</td><td>" + windspeed + " m/s</td></tr>";
+                output += "</table>";
+                 
+                document.getElementById("weather").innerHTML = output;
+                /*
+                alert(location + " " + description + " " + temperature + " " + pressure + " " + humidity + " " + windspeed);
+                */
+            }
+        }
+
+        }
+
+        function onError(error)
+        {
+            switch(error.code)
+            {
+                case PERMISSION_DENIED:
+                    alert("User deined permission");
+                    break;
+                case TIMEOUT:
+                    alert("Geolocation timeout");
+                    break;
+                case POSITION_UNAVAILABLE:
+                    alert("Geolocation informatin is not available");
+                    break;
+                default:
+                    alert("Unknown error");
+                    break;
+            }
+        }
+
+    </script>
+</body>
+</html>
