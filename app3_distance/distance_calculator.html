@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<meta cahrset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Distance Calculator</title>
+	<head>
+	<body>
+
+		<fieldset style="width:500px;">
+			<legend> <b>Distance between Current Location and Your Destination</b></legend>
+
+			Destination: <input type="text" id="destination"><br>
+			<button type="button" id="btnCalculate" onclick="findDistance();" value="Find Distance">Find Distance</button><br>
+			<div id="result"></div>
+		
+		</fieldset>
+
+<script>
+	// MAIN FUNCTION THAT INITIATE A REQUEST
+ function findDistance()
+{
+	if(navigator.geolocation) 
+	{
+		navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+			enableHighAccuracy: true,
+			maximumAge: 5*60*1000,
+			timeout: 60*1000
+		});
+	}
+	else
+	{
+		document.getElementById("result").innerHTML = "Your browser does not support HTML 5 Geolocation";
+	}
+
+}
+
+
+// HERE IS THE SUCCESS FUNCTINO IT WORKS WITH REQUESTED DATA VIA THE GEOCODER API
+function onSuccess(position)
+{
+
+	// here we request our current position
+	var latSource = position.coords.latitude;
+	
+	var longSource = position.coords.longitude;
+
+	// Here we get the value of the input text value
+	var addr = document.getElementById("destination").value;
+
+	// Here we send this value to the function
+	var latlong = getLatLong(addr);
+	console.log("Display latlong " + latlong);
+	// her we set the found latlong to the separate langitude and longitude
+	// from the returned by the getLatLong object
+	//console.log("This is the onSuccess" + latlong.latitude + " " + latlong.longitude);
+	var latDest = latlong.latitude;
+	
+	var longDest = latlong.longitude;
+	
+	// call the Calculate Distance function
+	var dist = Math.round(calculateDist(latSource, longSource, latDest, longDest)*100)/100;
+	document.getElementById("result").innerHTML = "You are " + dist + " kilometers from your desination";
+}
+
+
+// Here we use the Haversine_formula to calculate distance on a sphere
+// https://rosettacode.org/wiki/Haversine_formula#JavaScript
+function calculateDist(latSource, longSource, latDest, longDest)
+{
+	// Multiply by a modifier to  convert to Raidans
+	latSourceRadians = latSource*Math.PI/180;
+	longSourceRadians = longSource*Math.PI/180;
+
+	latDestRadians = latDest*Math.PI/180;
+	longDestRadians = longDest*Math.PI/180;
+
+	// here is the formula implementation via acos
+	var distance = 3959 * Math.acos(
+		// latitude COS Multiplicatoin
+		Math.cos(latSourceRadians) * Math.cos(latDestRadians) *
+		// Longitude1 - Longitude2
+		Math.cos(longSourceRadians - longDestRadians) +
+		// Now we're adding a Sin(latitude) multiplication
+		Math.sin(latSourceRadians) * Math.sin(latDestRadians) 
+	);
+
+	distance = distance * 1.609344;
+	  
+	return distance;
+
+
+}
+
+
+// THIS IS THE GET ADDRESS FUNCTION USING GEOCODER API
+function getLatLong(address)
+{
+	// we separate the address with a + instead of a space
+	var localAddress = address.replace(" ", "+");
+	var latlng = {};
+
+	// We create a request to send it to the google api to retunr the lat and long
+	var xmlhttpAddr = new XMLHttpRequest();
+	var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + localAddress + "&key=AIzaSyBVx0UutwLf5HpsYhD0ixqLvULEb7YPJ4Y";
+	xmlhttpAddr.open("GET", url, true);
+	xmlhttpAddr.send();
+
+	 
+		if(this.status == 200)
+		{
+			// Here the data sholud be parsed so I would be able to work with it
+			var result = JSON.parse(this.responseText);
+			// get the data from the API
+			var lat = result.results[0].geometry.location.lat;
+			var long = result.results[0].geometry.location.lng;
+			
+			latlng = { "latitude": lat, "longitude": long };
+			// DATA as object that can be used in the onSuccess function to set values of latlng
+		 
+			console.log("This is the console from the ONLOAD: " + latlng);
+		}
+ 
+	 console.log("This is the console from the geLatLong end: " + latlng)
+	 return latlng;
+
+}
+
+
+// THIS IS THE ERROR FUNCTION
+function onError(error)
+{
+	switch(error.code)
+	{
+		case PERMISSION_DENIED:
+			alert("User denied permission");
+			break;
+		case TIMEOUT:
+			alert("Geolocation timeout");
+			break;
+		case POSITION_UNAVAILABLE:
+			alert("Geolocation information is not available");
+			break;
+		default:
+			alert("Unknown Error occured");
+			break;
+	}
+}
+
+</script>
+	</body>
+</html>
