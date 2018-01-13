@@ -2,3 +2,29 @@
 
 based on the name of the object and radius from the center point.
 
+in order to create this App I need to do the following:
+
+1.Set Global Variables that are going to be used by the functions.
+Such as:
+    location, interest, distance, map
+    set an array for markers
+
+2. Create function that are going to be executed 
+
+Top layer function:
+window.onload = function() {}
+block 1: geolocation functions
+onSuccess(),
+onError(),
+{},
+
+block2: map and places:
+drawMap(),
+getLocation(),
+findPlaces()
+
+block3: markers
+createMarkers(),
+createMarker(),
+clearMarkers()
+
