@@ -1,0 +1,4 @@
+// Build a points around me application
+
+based on the name of the object and radius from the center point.
+
