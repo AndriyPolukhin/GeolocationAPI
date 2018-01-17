@@ -1,0 +1,12 @@
+SIMPLE STORE LOCATOR APP
+HERE I BUILD Following a google expret tut: 
+https://developers.google.com/maps/solutions/store-locator/simple-store-locator
+
+
+Simple Store Locator App
+Josie's Cafe is a fictitious restaurant chain featuring two different location categories: coffee shops, and patisseries. This tutorial shows you how to build a store locator map application that displays custom markers to indicate store locations. It demonstrates how to do the following things:
+
+Use GeoJSON to define a static list of locations and associated metadata.
+Display location markers on a map, using icons to indicate category (cafe or patisserie).
+Display location metadata using a custom InfoWindow.
+Apply styling to a map.
