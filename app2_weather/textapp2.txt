@@ -2,20 +2,27 @@
 
 I am using the openWeatherMap
 
-The basic api call is made using the following scheme:
+The basic api call 
+is made using the following scheme:
+
 
 API call:
 http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID={APIKEY}
 
-APPID{APIKEY} is my unique API key
+APPID{APIKEY} is my 
+unique API key
 
 I should use the city ID
-I should request the server on the address: api.openweathermap.org
+I should request the server on the 
+address: api.openweathermap.org
 
 
-I can use a sample request to this page:
+I can use a sample request to this 
+page:
 http://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22
 
-!!! sample APPID = {b6907d289e10d714a6e88b30761fae22}
+!!! 
+sample APPID = {b6907d289e10d714a6e88b30761fae22}
 
-using a request address: api.openweathermap.org/data/2.5/weather?lat=35&lon=139
+using a request 
+address: api.openweathermap.org/data/2.5/weather?lat=35&lon=139

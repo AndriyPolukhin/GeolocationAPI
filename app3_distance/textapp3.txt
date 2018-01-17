@@ -1,6 +1,8 @@
 // Moving to app 3 the Distance Calculator
 
-so I create a basic Front End representation using a fieldset and legend, also adding an input filed and a button.
+so I create a basic 
+Front End representation using a fieldset and legend, 
+also adding an input filed and a button.
 
 https://rosettacode.org/wiki/Haversine_formula#JavaScript
 
