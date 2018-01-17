@@ -1,1 +1,16 @@
 HERE I start making an APP to lookup addressedd based on a post code
+
+Practice: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
+
+1. Create a Front-End
+2. get Lat and lon
+3. Pass it to the geocoder
+4. Use a postCode function: to find postcode and to find address
+
+
+STEPS:
+
+1. USE Navigator geolocation
+2. Create function onSuccess(), onError(), and set parameters for the function
+3. Crete function findPostCode() and set the Geocoder in it.
+4. Create a function getResults() and use a for loop to find the right type and get it back

@@ -21,17 +21,130 @@
 	</head>
 
 	<body>
+		<div>
+			Your Postcode: <span id="postcode"></span><br><br>
+			<fieldset  style="width:500px;">
+				<legend><b>Postcode Finder</b></legend>
+				Address: <input type="text" id="address" size="40"><br><br>
+				<button id="btnFind" onclick="findPostCode('requested');">Find postcode</button><br><br>
+				Postcode of the requested address : <span id="code"></span>
+			</fieldset>
+		</div>
 
-
-
-
-	
 	<script>
 
-	
 
+ 		var mapLocation, map, lat, lng, display;
+
+		window.onload = function()
+		{
+			if(navigator.geolocation)
+			{
+				navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+					enableHighAccuracy: true,
+					maximumAge: 5*60*1000,
+					timeout: 60*1000
+				});
+			}
+			else
+			{
+				document.getElementById("postcode").innerHTML = "Your browser does not support geolocation";
+ 				console.log("Your browser does not support geolocation");
+			}
+		}
+
+		function onError(error)
+		{
+			switch(error.code)
+			{
+ 				case error.PERMISSION_DENIED:
+					alert("User denied permission");
+					break;
+				case error.TIMEOUT:
+					alert("Geolocation timeout");
+					break;
+				case error.POSITION_UNAVAILABLE:
+					alert("Geolocation information is not available");
+					break;
+				default:
+					alert("Unknown error");
+					break;
+			}
+		}
+
+		function onSuccess(position)
+		{
+			 lat = position.coords.latitude;
+			 lng = position.coords.longitude;
+
+
+
+			 findPostCode("initial");
+		}
+
+		function findPostCode(option)
+		{
+
+			var geocoder = new google.maps.Geocoder();
+
+
+			if(option == "initial")
+			{
+				display = "postcode";
+				var latlng = new google.maps.LatLng(lat, lng);
+				geocoder.geocode({"location": latlng}, getResult);
+			}
+			else if(option == 'requested')
+			{
+				document.getElementById("code").innerHTML = "";
+				display = "code";
+				var addr = document.getElementById("address").value.replace(" ", "+");
+				geocoder.geocode({"address": addr}, getResult);
+			}
+			else {
+				alert("Could not get the postcode for the following reason : "  + status);
+			}
+		}
+
+		function getResult(results, status)
+		{
+			if(status == google.maps.GeocoderStatus.OK)
+			{
+				if(results)
+				{
+
+					var flag = 0;
+					for(var i = 0; i < results[0].address_components.length; i++)
+						{
+							if(results[0].address_components[i].types == "postal_code")
+							{
+								document.getElementById(display).innerHTML = "<b>" + results[0].address_components[i].long_name + "</b>";
+								return
+							}
+							else
+							{
+								flag = 1;
+							}
+
+						}
+
+						if(flag == 1)
+						{
+							alert("Enter a more specific address");
+						}
+					  
+					
+				}
+			}
+			else
+			{
+				alert("Geocode was not successful for the following reason: " + status);
+			}
+		}
 
 	</script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVx0UutwLf5HpsYhD0ixqLvULEb7YPJ4Y"></script>
+	<!-- <script src="https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBVx0UutwLf5HpsYhD0ixqLvULEb7YPJ4Y"></script> -->
 	</body>
 
 
