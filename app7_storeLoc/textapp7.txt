@@ -1,0 +1,19 @@
+// THIS IS A STORE LOCATION APP7
+
+THE Algorithm of creation is in the following STEPS:
+
+Creating a store locator application with connection with a database.
+
+1.  DESING THE FRONT END
+2.  Populate the Country Dropdown
+3.  Implement the onchange of the Dropdown
+4.  Fetch Details form the database
+5.  Collect the Response
+6.  Draw the Map
+7.  Add the Markers
+8.  Geocoding API addition
+9.  Collect Latitude and Longitude and pass it as a request
+10. Query to database to calculate Two Points
+11. Write the Query
+12. Collect the Response and set it to the function
+

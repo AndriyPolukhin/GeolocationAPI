@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Store Locator App</title>
+		<style>
+
+			html, body {
+				height: 100%;
+				margin: 0;
+				padding: 0;
+			}
+			fieldset {
+				width: 230px;
+				padding: 10px;
+				display: inline;
+				 
+			}
+
+			#mapArea {
+				width: 500px;
+				height: 500px;
+			}
+
+			input[type="text"] { 
+				width: 50px;
+			}
+
+		</style>
+	</head>
+
+	<body>
+
+
+		<fieldset id="field">
+<legend>
+	<b>Stores within a selected County</b>
+</legend>
+			County:
+			<select name="county" id="county">
+					<option value="nothing" >Select</option>
+				
+			</select>
+		</fieldset>
+			OR
+		<fieldset>
+<legend><b>Stores near a specific PostCode</b>
+</legend>
+			Postcode: <input type="text" id="zip" name="zip">
+		</fieldset>
+
+		
+
+		<div id="mapArea"></div>
+
+
+		<script>
+		var xhr;
+		window.onload = function() 
+		{
+			loadCounty();
+			document.getElementById("field").addEventListener("click", loadCounty);
+		}
+
+		function loadCounty()
+		{
+			xhr = new XMLHttpRequest();
+			xhr.open("GET", "ask.php", true);
+			
+			 xhr.onload = function()
+			 	{ 
+				if(this.status == 200) 
+				{
+					var county = JSON.parse(xhr.responseText);
+
+ 					var output = '<select name="county" id="county">'
+				 				+ '<option value="nothing">Select</option>';
+			
+					for(var i in county)
+					{
+					 output += '<option>' + county[i] + '</option>';
+					}
+					output += '</select>';
+					document.getElementById("county").innerHTML = output;
+				}
+			}
+			xhr.send();
+ 		}
+		
+ 
+		
+		
+		</script>
+
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVx0UutwLf5HpsYhD0ixqLvULEb7YPJ4Y"></script>
+
+	</body>
+
+</html>
